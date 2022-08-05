@@ -1,25 +1,65 @@
-type Block @entity {
-  id: ID! # The block hash
-  height: BigInt!
-}
-
-type ExecuteEvent @entity {
+type Propose @entity {
   id: ID!
   blockHeight: BigInt!
-  txHash: String!
-  contractAddress: String!
-}
-
-type Transaction @entity {
-  id: ID!
-  blockHeight: BigInt!
-  timestamp: String!
-}
-
-type Message @entity {
-  id: ID!
-  blockHeight: BigInt!
-  txHash: String!
   sender: String!
-  contract: String!
+  title: String!
+  description: String!
+  msgs: String!
+}
+
+type Vote @entity {
+  id: ID!
+  blockHeight: BigInt!
+  sender: String!
+  proposalId: BigInt!
+  vote: String!
+}
+
+type Execute @entity {
+  id: ID!
+  blockHeight: BigInt!
+  sender: String!
+  proposalId: BigInt!
+}
+
+type Close @entity {
+  id: ID!
+  blockHeight: BigInt!
+  sender: String!
+  proposalId: BigInt!
+}
+
+type UpdateConfig @entity {
+  id: ID!
+  blockHeight: BigInt!
+  sender: String!
+  #TODO: more fields
+}
+
+type AddProposalHook @entity {
+  id: ID!
+  blockHeight: BigInt!
+  sender: String!
+  address: String!
+}
+
+type RemoveProposalHook @entity {
+  id: ID!
+  blockHeight: BigInt!
+  sender: String!
+  address: String!
+}
+
+type AddVoteHook @entity {
+  id: ID!
+  blockHeight: BigInt!
+  sender: String!
+  address: String!
+}
+
+type RemoveVoteHook @entity {
+  id: ID!
+  blockHeight: BigInt!
+  sender: String!
+  address: String!
 }

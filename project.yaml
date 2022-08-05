@@ -23,7 +23,7 @@ network:
 
 dataSources:
   - kind: cosmos/Runtime
-    startBlock: 4136532 # first block on juno-1
+    startBlock: 4220540 # first block on juno-1 4136532
     #chainTypes: # This is a beta feature that allows support for any Cosmos chain by importing the correct protobuf messages
     #  cosmos.slashing.v1beta1:
     #    file: "./proto/cosmos/slashing/v1beta1/tx.proto"
@@ -32,24 +32,59 @@ dataSources:
     mapping:
       file: "./dist/index.js"
       handlers:
-        - handler: handleBlock
-          kind: cosmos/BlockHandler
-        - handler: handleTransaction
-          kind: cosmos/TransactionHandler
-        - handler: handleEvent
-          kind: cosmos/EventHandler
-          filter:
-            type: execute
-            messageFilter:
-              type: "/cosmwasm.wasm.v1.MsgExecuteContract"
-              # contractCall field can be specified here too
-              #values: # A set of key/value pairs that are present in the message data
-              #contract: "juno1v99ehkuetkpf0yxdry8ce92yeqaeaa7lyxr2aagkesrw67wcsn8qxpxay0"
-        - handler: handleMessage
+        - handler: handlePropose
           kind: cosmos/MessageHandler
           filter:
             type: "/cosmwasm.wasm.v1.MsgExecuteContract"
-            # Filter to only messages with the provide_liquidity function call
-            #contractCall: "provide_liquidity" # The name of the contract function that was called
-            #values: # A set of key/value pairs that are present in the message data
-            #contract: "juno1v99ehkuetkpf0yxdry8ce92yeqaeaa7lyxr2aagkesrw67wcsn8qxpxay0"
+            contractCall: "propose"
+            contract: "juno18mtjkdrdmq83pcz5qa0r67x2csrs3knsgyrxdq5ygfjhywdjxv0qj2ugw6"
+        - handler: handleVote
+          kind: cosmos/MessageHandler
+          filter:
+            type: "/cosmwasm.wasm.v1.MsgExecuteContract"
+            contractCall: "vote"
+            contract: "juno18mtjkdrdmq83pcz5qa0r67x2csrs3knsgyrxdq5ygfjhywdjxv0qj2ugw6"
+        - handler: handleExecute
+          kind: cosmos/MessageHandler
+          filter:
+            type: "/cosmwasm.wasm.v1.MsgExecuteContract"
+            contractCall: "execute"
+            contract: "juno18mtjkdrdmq83pcz5qa0r67x2csrs3knsgyrxdq5ygfjhywdjxv0qj2ugw6"
+        - handler: handleClose
+          kind: cosmos/MessageHandler
+          filter:
+            type: "/cosmwasm.wasm.v1.MsgExecuteContract"
+            contractCall: "close"
+            contract: "juno18mtjkdrdmq83pcz5qa0r67x2csrs3knsgyrxdq5ygfjhywdjxv0qj2ugw6"
+        - handler: handleUpdateConfig
+          kind: cosmos/MessageHandler
+          filter:
+            type: "/cosmwasm.wasm.v1.MsgExecuteContract"
+            contractCall: "update_config"
+            contract: "juno18mtjkdrdmq83pcz5qa0r67x2csrs3knsgyrxdq5ygfjhywdjxv0qj2ugw6"
+        - handler: handleAddProposalHook
+          kind: cosmos/MessageHandler
+          filter:
+            type: "/cosmwasm.wasm.v1.MsgExecuteContract"
+            contractCall: "add_proposal_hook"
+            contract: "juno18mtjkdrdmq83pcz5qa0r67x2csrs3knsgyrxdq5ygfjhywdjxv0qj2ugw6"
+        - handler: handleRemoveProposalHook
+          kind: cosmos/MessageHandler
+          filter:
+            type: "/cosmwasm.wasm.v1.MsgExecuteContract"
+            contractCall: "remove_proposal_hook"
+            contract: "juno18mtjkdrdmq83pcz5qa0r67x2csrs3knsgyrxdq5ygfjhywdjxv0qj2ugw6"
+        - handler: handleAddVoteHook
+          kind: cosmos/MessageHandler
+          filter:
+            type: "/cosmwasm.wasm.v1.MsgExecuteContract"
+            contractCall: "add_vote_hook"
+            contract: "juno18mtjkdrdmq83pcz5qa0r67x2csrs3knsgyrxdq5ygfjhywdjxv0qj2ugw6"
+        - handler: handleRemoveVoteHook
+          kind: cosmos/MessageHandler
+          filter:
+            type: "/cosmwasm.wasm.v1.MsgExecuteContract"
+            contractCall: "remove_vote_hook"
+            contract: "juno18mtjkdrdmq83pcz5qa0r67x2csrs3knsgyrxdq5ygfjhywdjxv0qj2ugw6"
+
+
